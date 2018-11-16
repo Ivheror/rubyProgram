@@ -89,4 +89,8 @@ class Agenda
 end
 
 agenda = Agenda.new
+<<<<<<< HEAD
 agenda.menu
+=======
+agenda.menu
+>>>>>>> 36cc5da1a6e47002d234bc0966b92b2d4cc62ad8
