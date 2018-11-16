@@ -1,66 +1,92 @@
-class Alumnos
+class Agenda
 	def initialize
-    	@notas = Hash.new
-  	end
-
+		@contactos = Hash.new
+	end
 	def menu
 		opcion = 0
-		while opcion !=4
-			puts "*" * 80
-			puts "1 - Nuevo alumno \n"
-			puts "2 - Listar alumnos \n"
-			puts "3 - Listar los que superen un 7 \n"
-			puts "4 - Salir \n"
-			puts "*" * 80
-			puts "Ingrese su opción \n"
-			puts "*" * 80
+		while opcion != 6
+			puts "1- Carga de un contacto en la agenda. \n"
+			puts "2- Listado completo de la agenda. \n"
+			puts "3- Consulta ingresando el nombre de la persona. \n"
+			puts "4- Modificación de un teléfono \n"
+			puts "5- Borrar contacto. \n"
+			puts "-" * 50
+			puts "Ingrese opción : "
 			opcion = gets.to_i
 			if opcion == 1
 				cargar
 			elsif opcion == 2
 				listar
 			elsif opcion == 3
-				listarmayores
-			else
+				consultar
+			elsif opcion == 4
+				modificar
+			elsif opcion == 5
 				salir
 			end
 		end
 	end
 	def cargar
-		for indice in 1..3
-			puts "Inserte el nombre del alumno"
-			alumno = gets.chomp
-			puts "Nota del alumno"
-			no = gets.to_i
-			@notas[alumno] = no
+		for i in 1..2
+			puts "Introduce el nombre del contacto"
+			nombre = gets.chomp
+			puts "Introduce telefono del contacto"
+			numero = gets.to_i
+			@contactos[nombre] = numero
+			puts " \n"
+			puts "[CORRECTO]Contacto creado"
+			puts " \n"
 		end
 	end
 	def listar
-		puts "-" * 80
-		puts "Listado de alumnos"
-		puts "-" * 80
-		@notas.each do |nombre,nota|
-		puts "Alumno: #{nombre}, nota #{nota} \n"
+		puts "Listado completo de los contactos"
+		puts "*" * 50
+		@contactos.each do |nombre,numero|
+			puts "Nombre: #{nombre}, Número: #{numero}"
+		end
+		puts "*" * 50
+		puts "\n"
+	end
+	def consultar
+		puts "Nombre del contacto a buscar"
+		nom = gets.chomp
+		if @contactos.include? nom
+			puts "*" * 50
+			puts "Nombre: #{nom}, Telefono: #{@contactos[nom]} \n"
+			puts "*" * 50
+		else
+			puts "No existe ningún contacto con ese nombre \n"
 		end
 	end
-	def listarmayores
-		puts "-" * 80
-		puts "Listado de alumnos que superan 7"
-		puts "-" * 80
-		@notas.each do |nombre,nota|
-			if nota > 7
-				puts "Alumno: #{nombre}, nota #{nota} \n"
+	def modificar
+		puts "Ingrese nombre del contacto a modificar"
+		nom = gets.chomp
+		if @contactos.include? nom
+			puts "Nuevo numero:"
+			telefono = gets.to_i
+			if telefono.digits.count > 9
+				puts "El telefono no puede tener más de 9 digitos \n"
 			else
-				puts "Ningún alumno supera el 7"
+				puts " \n"
+				puts "[CORRECTO]Numero modificado"
+				puts " \n"
+				@contactos[nom] = telefono
 			end
+			
+		else
+			puts "No existe ese contacto \n"
 		end
 	end
-	def salir
-		puts "Saliendo del programa ..."
-		exit
+	def borrar
+		puts "Nombre de contacto a borrar:"
+		nombre = gets.chomp
+		if @contactos.include? nombre
+			@contactos.delete(nombre)
+		else
+			puts "No existe ese contacto"
+		end
 	end
 end
 
-#Creamos un nuevo alumno y llamamos al menú para que nos aparezca 
-alumnos = Alumnos.new
-alumnos.menu
+agenda = Agenda.new
+agenda.menu
